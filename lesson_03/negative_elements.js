@@ -1,0 +1,20 @@
+/**
+ * Returns sum and number of negative elements in the array
+ *
+ * @example
+ * // returns { count: 5, sum: -357 }
+ * negativeElements([91, 93, 45, -67, -96, -40, 34, -96, 42, -58]);
+ *
+ * @param {number[]} array Array of numbers
+ * @returns {{count: number, sum: number}} Sum and number of negative elements in the array
+ */
+function negativeElements(array) {
+    const elements = array.filter(el => el < 0);
+
+    return {
+        count: elements.length,
+        sum: elements.reduce((sum, el) => sum + el, 0)
+    };
+}
+
+console.log(negativeElements([91, 93, 45, -67, -96, -40, 34, -96, 42, -58]));
