@@ -9,7 +9,7 @@ const replaceCondition = 'overloading';
 // The division is approximate, '!', '?', etc. are not counted.
 // Expressions containing a dot will also be divided into different sentences.
 // (e.g. "Mr. Smith bought a boat for $1.5 million" -> ["Mr", " Smith bought a boat for $1", "5 million"])
-sentences = text.split('.');
+const sentences = text.split('.');
 
 let editedText = [];
 
