@@ -2,7 +2,7 @@ const key = prompt('Enter key: ');
 
 // error if 'cancel' is selected or an empty value is entered
 if (key === null || key.trim() === '') {
-    console.error('The key cannot be empty!')
+    console.error('The key cannot be empty!');
 } else {
     const keyCodeA = 'a'.charCodeAt(0);
 

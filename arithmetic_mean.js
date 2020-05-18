@@ -15,4 +15,4 @@ while (true) {
     console.log(`Entered number: ${number}; Arithmetic mean: ${arithmeticMean}`);
 }
 
-alert(`Arithmetic mean: ${arithmeticMean}`)
+alert(`Arithmetic mean: ${arithmeticMean}`);

@@ -10,7 +10,7 @@ const timeString = prompt('Enter the date: ') || '';
 const timeArray = timeString.match(/^(\d{1,2})\D*(\d{1,2})\s*(.*)$/) || [];
 
 // A year is inserted to the generated date in order to new Date returns a valid object
-const date = new Date(`2020, ${timeArray[1]}:${timeArray[2]} ${timeArray[3]}`)
+const date = new Date(`2020, ${timeArray[1]}:${timeArray[2]} ${timeArray[3]}`);
 
 if (isNaN(date)) {
     console.error('Incorrect time!');
