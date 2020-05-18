@@ -1,0 +1,28 @@
+{
+  "name": "thinknetica_js",
+  "version": "1.0.0",
+  "description": "The \"Advanced Javascript\" course from Thinknetica",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konoplev-roman/thinknetica_js.git"
+  },
+  "author": "Roman Konoplev <roman@konoplev.pro>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konoplev-roman/thinknetica_js/issues"
+  },
+  "homepage": "https://github.com/konoplev-roman/thinknetica_js#readme"
+}
