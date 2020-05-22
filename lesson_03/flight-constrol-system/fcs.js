@@ -27,7 +27,8 @@ let flights = {
                 buyTime: makeTime(2, 0),
                 registrationTime: null
             }
-        ]
+        ],
+        returnedTickets: []
     }
 };
 
@@ -245,6 +246,9 @@ function flightReport(flight, nowTime) {
     const countOfSeats = foundFlight.seats;
     const reservedSeats = foundFlight.tickets.length;
     const registeredSeats = foundFlight.tickets.filter(item => item.registrationTime).length;
+    const countOfReservations = foundFlight.tickets.length + foundFlight.returnedTickets.length;
+    const countOfReverts = foundFlight.returnedTickets.length;
+    const percentOfReverts = (countOfReverts / countOfReservations) * 100;
 
     return {
         flight,
@@ -252,12 +256,67 @@ function flightReport(flight, nowTime) {
         complete,
         countOfSeats,
         reservedSeats,
-        registeredSeats
+        registeredSeats,
+        countOfReservations,
+        countOfReverts,
+        percentOfReverts
     };
+}
+
+/**
+ * Функция возврата билета
+ *
+ *  * проверка рейса
+ *  * проверка билета
+ *  * вернуть билет можно если до рейса не менее 3 часов
+ *  * вернуть билет можно если не бизнес класс
+ *
+ * @param {string} ticket номер билета
+ * @param {number} nowTime текущее время
+ * @returns {boolean} удалось ли отменить билет
+ */
+function revertTicket(ticket, nowTime) {
+    try {
+        const flight = flights[ticket.split('-')[0]];
+
+        if (!flight) {
+            throw new Error('Flight not found');
+        }
+
+        const foundTicket = flight.tickets.find(item => item.id === ticket);
+
+        if (!foundTicket) {
+            throw new Error('Ticket not found');
+        }
+
+        if (foundTicket.type === 1) {
+            throw new Error('Ticket return from business class is not available');
+        }
+
+        // A refund is available 3 hours before the flight
+        // Check-in closes one hour before the flight
+        // So the refund ends 2 hours before the check-in closes
+        if (flight.registartionEnds - (2 * 60 * 60 * 1000) < nowTime) {
+            throw new Error('Ticket return time has expired');
+        }
+
+        const ticketIndex = flight.tickets.indexOf(foundTicket);
+        flight.tickets.splice(ticketIndex, 1);
+
+        flight.returnedTickets.push(foundTicket);
+
+        return true;
+    } catch (e) {
+        console.error(e.message);
+
+        return false;
+    }
 }
 
 const ticket = buyTicket('BH118', makeTime(5, 10), 'Petrov I. I.');
 
 eRegistration(ticket.id, 'Petrov I. I.', makeTime(12, 30));
+
+revertTicket(ticket.id, makeTime(12, 40));
 
 console.table(flightReport('BH118', makeTime(15, 30)));

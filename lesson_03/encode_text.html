@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Encode text</title>
+</head>
+<body>
+<h3>Encode text</h3>
+<p>A function that accepts text selects all the unique words in it, calculates the number of occurrences for each word and assigns a unique code. Then encodes the text, replacing the words from the dictionary with the word code.
+(Word - symbols between spaces. Unique code - random number (preferably in 16 or 36 characters system))</p>
+<ul>
+    <li>Example: <pre>Lorem ipsum ipsum dolor.</pre></li>
+    <li>Result: <pre>{
+  dictionary: [
+    { word: 'Lorem', count: 1, code: '58' },
+    { word: 'ipsum', count: 2, code: 'rd' },
+    { word: 'dolor.', count: 1, code: 'g7' }
+  ],
+  encodedText: '58,rd,rd,g7'
+}</pre></li>
+</ul>
+<script src="encode_text.js"></script>
+</body>
+</html>

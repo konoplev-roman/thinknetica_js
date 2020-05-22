@@ -13,6 +13,7 @@
  * @property {number} registrationStarts Время начала регистрации на борт
  * @property {number} registartionEnds Время окончания регистрации на борт
  * @property {Ticket[]} tickets Массив всех билетов
+ * @property {Ticket[]} returnedTickets Массив всех возвращенных билетов
  */
 
 /**
@@ -36,4 +37,7 @@
  * @property {number} countOfSeats Общее количество мест
  * @property {number} reservedSeats Количество купленных (забронированных) мест
  * @property {number} registeredSeats Количество пассажиров, прошедших регистрацию
+ * @property {number} countOfReservations Количество всех регистраций мест
+ * @property {number} countOfReverts Количество возвратов билетов
+ * @property {number} percentOfReverts Процент возвратов от общего числа бронирований
  */
