@@ -13,6 +13,7 @@
  * @property {number} registrationStarts Время начала регистрации на борт
  * @property {number} registartionEnds Время окончания регистрации на борт
  * @property {Ticket[]} tickets Массив всех билетов
+ * @property {Ticket[]} returnedTickets Массив всех возвращенных билетов
  */
 
 /**
