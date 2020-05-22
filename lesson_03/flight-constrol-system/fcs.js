@@ -158,10 +158,6 @@ function buyTicket(flightName, buyTime, fullName, type = 0) {
     };
 }
 
-const a = buyTicket('BH118', makeTime(5, 10), 'Petrov I. I.');
-
-console.log(a);
-
 function displayFlights() {
     console.log('*** List of all flights ***');
     console.table(flights);
@@ -178,3 +174,55 @@ function flightDetails(flightName) {
     console.table(flight);
     console.table(flight.tickets);
 }
+
+/**
+ * Функция пробует произвести электронную регистрацию пассажира
+ *
+ *  * проверка билета
+ *  * проверка данных пассажира
+ *  * электронную регистрацию можно произвести только в период от 5 до 1 часа до полета
+ *
+ * @param {string} ticket номер билета
+ * @param {string} fullName имя пассажира
+ * @param {number} nowTime текущее время
+ * @returns boolean успешна ли регистрация
+ */
+function eRegistration(ticket, fullName, nowTime) {
+    try {
+        const flight = flights[ticket.split('-')[0]];
+
+        if (!flight) {
+            throw new Error('Flight not found');
+        }
+
+        const foundTicket = flight.tickets.find(item => item.id === ticket);
+
+        if (!foundTicket) {
+            throw new Error('Ticket not found');
+        }
+
+        if (foundTicket.fullName !== fullName) {
+            throw new Error('The full name doesn\'t match');
+        }
+
+        if (flight.registrationStarts > nowTime) {
+            throw new Error('The registration hasn\'t started yet');
+        }
+
+        if (flight.registartionEnds < nowTime) {
+            throw new Error('The registration is already over');
+        }
+
+        foundTicket.registrationTime = nowTime;
+
+        return true;
+    } catch (e) {
+        console.error(e.message);
+
+        return false;
+    }
+}
+
+const ticket = buyTicket('BH118', makeTime(5, 10), 'Petrov I. I.');
+
+console.log(eRegistration(ticket.id, 'Petrov I. I.', makeTime(12, 30)));
