@@ -223,6 +223,41 @@ function eRegistration(ticket, fullName, nowTime) {
     }
 }
 
+/**
+ * Функция генерации отчета по рейсу
+ *
+ *  * проверка рейса
+ *  * подсчет
+ *
+ * @param {string} flight номер рейса
+ * @param {number} nowTime текущее время
+ * @returns {Report} отчет
+ */
+function flightReport(flight, nowTime) {
+    const foundFlight = flights[flight];
+
+    if (!foundFlight) {
+        throw new Error('Flight not found');
+    }
+
+    const registration = foundFlight.registrationStarts < nowTime && foundFlight.registartionEnds > nowTime;
+    const complete = foundFlight.registartionEnds < nowTime;
+    const countOfSeats = foundFlight.seats;
+    const reservedSeats = foundFlight.tickets.length;
+    const registeredSeats = foundFlight.tickets.filter(item => item.registrationTime).length;
+
+    return {
+        flight,
+        registration,
+        complete,
+        countOfSeats,
+        reservedSeats,
+        registeredSeats
+    };
+}
+
 const ticket = buyTicket('BH118', makeTime(5, 10), 'Petrov I. I.');
 
-console.log(eRegistration(ticket.id, 'Petrov I. I.', makeTime(12, 30)));
+eRegistration(ticket.id, 'Petrov I. I.', makeTime(12, 30));
+
+console.table(flightReport('BH118', makeTime(15, 30)));
