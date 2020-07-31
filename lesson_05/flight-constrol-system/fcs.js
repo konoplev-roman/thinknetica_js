@@ -164,16 +164,57 @@ function displayFlights() {
     console.table(flights);
 }
 
+function addHeader(container, text) {
+    const header = document.createElement('strong');
+    header.appendChild(document.createTextNode(text));
+
+    container.appendChild(header);
+}
+
+function addRow(container, description, value) {
+    const p = document.createElement('p');
+    p.appendChild(document.createTextNode(`${description}: ${value}`));
+
+    container.appendChild(p);
+}
+
 function flightDetails(flightName) {
-    console.log(`*** Details of flight ${flightName} ***`);
     const flight = flights[flightName];
+
     if (!flight) {
         console.warn('Flight not found');
         return;
     }
 
-    console.table(flight);
-    console.table(flight.tickets);
+    const div = document.createElement('div');
+    div.id = 'flight-details';
+
+    addHeader(div, 'Отчет по рейсу');
+
+    let fields = [
+        { description: 'Номер рейса', value: flight.name },
+        { description: 'Общее количество мест (включая бизнес класс)', value: flight.seats },
+        { description: 'Количество мест бизнес класса (первые номера мест в нумерации)', value: flight.businessSeats },
+        { description: 'Время начала регистрации на борт', value: new Date(flight.registrationStarts) },
+        { description: 'Время окончания регистрации на борт', value: new Date(flight.registartionEnds) }
+    ];
+
+    fields.forEach(field => addRow(div, field.description, field.value));
+
+    addHeader(div, 'Билеты');
+
+    flight.tickets.forEach(ticket => {
+        let fields = [
+            { description: 'Номер билета', value: ticket.id },
+            { description: 'Место', value: ticket.seat },
+            { description: 'Полное имя пассажира', value: ticket.fullName },
+            { description: 'Прошел регистрацию?', value: ticket.registrationTime != null }
+        ];
+
+        fields.forEach(field => addRow(div, field.description, field.value));
+    });
+
+    document.body.append(div);
 }
 
 /**
@@ -320,3 +361,5 @@ eRegistration(ticket.id, 'Petrov I. I.', makeTime(12, 30));
 revertTicket(ticket.id, makeTime(12, 40));
 
 console.table(flightReport('BH118', makeTime(15, 30)));
+
+flightDetails('BH118');
